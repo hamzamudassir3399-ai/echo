@@ -1,0 +1,6 @@
+{
+  "name": "Echo - Offline Music Player & Extension Host",
+  "description": "Clean, intuitive offline Android music player with an open extension architecture for local and external audio sources.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

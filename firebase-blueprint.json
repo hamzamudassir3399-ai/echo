@@ -1,0 +1,140 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User UID matching auth"
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "User display name"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "User email address"
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Avatar URL"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "email"]
+    },
+    "UserTrack": {
+      "title": "UserTrack",
+      "description": "Saved user track or cached offline audio item",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "artist": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "album": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "duration": {
+          "type": "number"
+        },
+        "format": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "source": {
+          "type": "string",
+          "enum": ["local", "sample", "extension", "ai-generated"]
+        },
+        "coverArt": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "dateAdded": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "title", "artist", "userId"]
+    },
+    "GeneratedMusic": {
+      "title": "GeneratedMusic",
+      "description": "AI-generated music clip created via Lyria models",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "prompt": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "model": {
+          "type": "string",
+          "enum": ["lyria-3-clip-preview", "lyria-3-pro-preview"]
+        },
+        "duration": {
+          "type": "number"
+        },
+        "genre": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "tempo": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "audioUrl": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "prompt", "model", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document restricted to the owner"
+    },
+    "/users/{userId}/tracks/{trackId}": {
+      "schema": "UserTrack",
+      "description": "User offline library tracks"
+    },
+    "/users/{userId}/generatedMusic/{musicId}": {
+      "schema": "GeneratedMusic",
+      "description": "User AI-generated music tracks"
+    }
+  }
+}
